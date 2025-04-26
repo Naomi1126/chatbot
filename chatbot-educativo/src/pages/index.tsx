@@ -30,7 +30,8 @@ export default function PinkyChatbot() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/chatbot/", {
+        const res = await fetch("https://pinky-sandy.vercel.app/chatbot/", 
+        {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

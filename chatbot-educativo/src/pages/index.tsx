@@ -30,7 +30,7 @@ export default function PinkyChatbot() {
     setLoading(true);
 
     try {
-        const res = await fetch("https://pinky-sandy.vercel.app/chatbot/", 
+        const res = await fetch("https://chatbot-fk3n.onrender.com", 
         {
         method: "POST",
         headers: {

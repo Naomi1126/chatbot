@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import requests
@@ -78,11 +78,15 @@ Preguntas:
 # 🌐 Endpoint principal
 @app.post("/chatbot/")
 async def chatbot(request: Request):
-    data = await request.json()
-    user_question = data.get("pregunta")
+    try:
+        data = await request.json()
+    except Exception as e:
+        print(f"[ERROR] No se pudo leer JSON: {e}")
+        raise HTTPException(status_code=400, detail="Solicitud inválida. Se esperaba un JSON válido.")
 
+    user_question = data.get("pregunta")
     if not user_question:
-        return {"respuesta": "No se recibió ninguna pregunta", "fuente": "error"}
+        raise HTTPException(status_code=422, detail="Campo 'pregunta' es obligatorio.")
 
     # 1. Wolfram primero
     respuesta_wolfram = consultar_wolframalpha(user_question)
